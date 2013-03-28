@@ -53,28 +53,36 @@ class ShiftPlanning
         SPModule.new('payroll.ratecard', 'GET', {}, %w(GET CREATE DELETE UPDATE), {:GET => %w(token id), :CREATE => %w(token name), :UPDATE => %w(token id), :DELETE => %w(token id)})
       )
       @schedule = _schedule.new(
-        SPModule.new('schedule.schedules', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.schedule', 'GET', {}, %w(GET CREATE UPDATE DELETE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('schedule.shifts', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.shift', 'GET', {}, %w(GET CREATE UPDATE DELETE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('schedule.shiftapprove', 'GET', {}, %w(GET CREATE UPDATE DELETE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('schedule.trade', 'GET', {}, %w(GET CREATE UDPATE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w()}),
-        SPModule.new('schedule.trades', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.tradelist', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.tradeswap', 'CREATE', {}, %w(CREATE UPDATE), {:CREATE => %w(), :UPDATE => %w()}),
-        SPModule.new('schedule.vacations', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.vacation', 'GET', {}, %w(GET CREATE UPDATE DELETE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('schedule.conflicts', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.copy', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.clear', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.restore', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.wizard', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.adjust', 'UPDATE', {}, %w(UPDATE), {:UPDATE => %w()}),
-        SPModule.new('schedule.fill', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.publish', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('schedule.requests', 'UPDATE', {}, %w(UPDATE), {:UPDATE => %w()}),
-        SPModule.new('schedule.breakrule', 'GET', {}, %w(GET CREATE DELETE), {:GET => %w(), :CREATE => %w(), :DELETE => %w()}),
-        SPModule.new('schedule.shiftrequests', 'CREATE', {}, %w(CREATE), {:CREATE => %w()})
+        SPModule.new('schedule.schedules', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('schedule.schedule', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
+          :GET => %w(token id), :CREATE => %w(token name), :UPDATE => %w(token id), :DELETE => %w(token id)
+        }),
+        SPModule.new('schedule.shifts', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('schedule.shift', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
+          :GET => %w(token id), :CREATE => %w(token start_time end_time start_date end_date), :UPDATE => %w(token id), :DELETE => %w(token id)
+        }),
+        SPModule.new('schedule.shiftapprove', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
+          :GET => %w(token id), :CREATE => %w(token id), :UPDATE => %w(token), :DELETE => %w(token id)
+        }),
+        SPModule.new('schedule.trade', 'GET', {}, %w(GET CREATE UDPATE), {:GET => %w(token id), :CREATE => %w(token shift tradewith reason), :UPDATE => %w(token trade action)}),
+        SPModule.new('schedule.trades', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('schedule.tradelist', 'GET', {}, %w(GET), {:GET => %w(token id)}),
+        SPModule.new('schedule.tradeswap', 'CREATE', {}, %w(CREATE UPDATE), {:CREATE => %w(token shift swap reason), :UPDATE => %w(token trade action)}),
+        SPModule.new('schedule.vacations', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('schedule.vacation', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
+          :GET => %w(token id), :CREATE => %w(token start_date end_date), :UPDATE => %w(token id), :DELETE => %w(token id)
+        }),
+        SPModule.new('schedule.conflicts', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('schedule.copy', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('schedule.clear', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('schedule.restore', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('schedule.wizard', 'GET', {}, %w(GET), {:GET => %w(token from_start from_end to_start to_end)}),
+        SPModule.new('schedule.adjust', 'UPDATE', {}, %w(UPDATE), {:UPDATE => %w(token from to budge)}),
+        SPModule.new('schedule.fill', 'GET', {}, %w(GET), {:GET => %w(token shifts)}),
+        SPModule.new('schedule.publish', 'GET', {}, %w(GET), {:GET => %w(token shifts)}),
+        SPModule.new('schedule.requests', 'UPDATE', {}, %w(UPDATE), {:UPDATE => %w(token id type mode)}),
+        SPModule.new('schedule.breakrule', 'GET', {}, %w(GET CREATE DELETE), {:GET => %w(token id), :CREATE => %w(token id break paid), :DELETE => %w(token id)}),
+        SPModule.new('schedule.shiftrequests', 'CREATE', {}, %w(CREATE), {:CREATE => %w(token shift)})
       )
       @timeclock = _timeclock.new(
         SPModule.new('timeclock.timeclocks', 'GET', {}, %w(GET), {:GET => %w()}),
