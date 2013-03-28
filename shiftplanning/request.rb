@@ -85,33 +85,43 @@ class ShiftPlanning
         SPModule.new('schedule.shiftrequests', 'CREATE', {}, %w(CREATE), {:CREATE => %w(token shift)})
       )
       @timeclock = _timeclock.new(
-        SPModule.new('timeclock.timeclocks', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.timeclock', 'GET', {}, %w(GET CREATE UPDATE DELETE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('timeclock.clockin', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.preclockin', 'GET', {}, %w(GET CREATE), {:GET => %w(), :CREATE => %w()}),
-        SPModule.new('timeclock.preclockins', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.clockout', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.status', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.manage', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.screenshot', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.event', 'CREATE', {}, %w(CREATE UPDATE DELETE), {:CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('timeclock.timesheets', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.addclocktime', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.savenote', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.forceclockout', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('timeclock.location', 'CREATE', {}, %w(CREATE DELETE), {:CREATE => %w(), :DELETE => %w()}),
-        SPModule.new('timeclock.terminal', 'CREATE', {}, %w(DELETE CREATE UPDATE), {:CREATE => %w(), :UPDATE => %w(), :DELETE => %w()})
+        SPModule.new('timeclock.timeclocks', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('timeclock.timeclock', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
+          :GET => %w(token id), :CREATE => %w(token start_date schedule employee start_time), :UPDATE => %w(token id), :DELETE => %w(token id)
+        }),
+        SPModule.new('timeclock.clockin', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('timeclock.preclockin', 'GET', {}, %w(GET CREATE), {:GET => %w(token), :CREATE => %w(token)}),
+        SPModule.new('timeclock.preclockins', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('timeclock.clockout', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('timeclock.status', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('timeclock.manage', 'GET', {}, %w(GET), {:GET => %w(token id action)}),
+        SPModule.new('timeclock.screenshot', 'GET', {}, %w(GET), {:GET => %w(token filedata)}),
+        SPModule.new('timeclock.event', 'CREATE', {}, %w(CREATE UPDATE DELETE), {
+          :CREATE => %w(token timeclock type), :UPDATE => %w(token timeclock type), :DELETE => %w(token timeclock type event)
+        }),
+        SPModule.new('timeclock.timesheets', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('timeclock.addclocktime', 'GET', {}, %w(GET), {:GET => %w(token employee datein dateout)}),
+        SPModule.new('timeclock.savenote', 'GET', {}, %w(GET), {:GET => %w(token id)}),
+        SPModule.new('timeclock.forceclockout', 'GET', {}, %w(GET), {:GET => %w(token id)}),
+        SPModule.new('timeclock.location', 'CREATE', {}, %w(CREATE DELETE), {:CREATE => %w(token name), :DELETE => %w(token id)}),
+        SPModule.new('timeclock.terminal', 'CREATE', {}, %w(DELETE CREATE UPDATE), {:CREATE => %w(token name location), :UPDATE => %w(token id), :DELETE => %w(token id)})
       )
       @staff = _staff.new(
-        SPModule.new('staff.login', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('staff.logout', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('staff.employees', 'GET', {}, %w(GET CREATE), {:GET => %w(), :CREATE => %w()}),
-        SPModule.new('staff.employee', 'GET', {}, %w(GET CREATE UPDATE DELETE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('staff.skills', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('staff.skill', 'GET', {}, %w(GET CREATE UPDATE DELETE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('staff.customfields', 'GET', {}, %w(GET), {:GET => %w()}),
-        SPModule.new('staff.customfield', 'GET', {}, %w(GET CREATE UPDATE DELETE), {:GET => %w(), :CREATE => %w(), :UPDATE => %w(), :DELETE => %w()}),
-        SPModule.new('staff.ping', 'GET', {}, %w(CREATE), {:CREATE => %w()})
+        SPModule.new('staff.login', 'GET', {}, %w(GET), {:GET => %w(username password)}),
+        SPModule.new('staff.logout', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('staff.employees', 'GET', {}, %w(GET CREATE), {:GET => %w(token), :CREATE => %w(token)}),
+        SPModule.new('staff.employee', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
+          :GET => %w(token), :CREATE => %w(token), :UPDATE => %w(token id), :DELETE => %w(token id)
+        }),
+        SPModule.new('staff.skills', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('staff.skill', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
+          :GET => %w(token id), :CREATE => %w(token name), :UPDATE => %w(token id name), :DELETE => %w(token id)
+        }),
+        SPModule.new('staff.customfields', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('staff.customfield', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
+          :GET => %w(token id), :CREATE => %w(token name type), :UPDATE => %w(token id), :DELETE => %w(token id)
+        }),
+        SPModule.new('staff.ping', 'GET', {}, %w(CREATE), {:CREATE => %w(token to message)})
       )
       @availability = _availability.new(
         SPModule.new('availability.available', 'GET', {}, %w(GET), {:GET => %w(token start_date)}),
