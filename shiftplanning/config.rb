@@ -1,3 +1,6 @@
+require 'uri'
+require 'net/http'
+
 class ShiftPlanning
   class Config
     # Setup class variables 

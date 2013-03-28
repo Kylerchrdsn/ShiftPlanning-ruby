@@ -11,8 +11,6 @@
 ######################################
 
 require 'rubygems'
-require 'uri'
-require 'net/http'
 require 'json'
 require 'shiftplanning/interface'
 require 'shiftplanning/http_error'
