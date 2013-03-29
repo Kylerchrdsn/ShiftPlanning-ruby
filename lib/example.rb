@@ -1,24 +1,21 @@
 #! /usr/bin/env ruby
 
-require 'shiftplanning.rb'
-API_KEY = "9eea91f6fcaa9573b3949f4eb3b58b3d4624b2d0"
+require 'rubygems'
+require 'shiftplanning'
+API_KEY = '9eea91f6fcaa9573b3949f4eb3b58b3d4624b2d0'#"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
-t = SP::Interface.new(API_KEY, :token => 'bb92f866a8efceda4f73c5e98e4a4e1f21a6207e', :verbose => true)
-r = SP::Request.new
+interface = SP::Interface.new(API_KEY, :verbose => true, :outfile => '/home/krichardson/Desktop/output')
+request   = SP::Request.new
 
-t.submit(r.staff.employees); to_del = []
+request.staff.login.params = {:username => 'krichardson@customerdirect.com', :password => 'T0p@z098765'}#{:username => 'hmoon@nabootique.com', :password => 'J@zZ'}
 
-puts t.token
-puts;puts
+interface.submit(request.staff.login)
+puts interface.token
+puts request.staff.login.supported_methods.inspect
+puts request.staff.login.required_params('get').inspect
 
-t.last_response['data'].each{ |row|
-  if row['status_name'] == 'Not Activated'
-    to_del << row['id'].to_i
-  end
-}
+interface.submit(request.api.config, request.api.methods)
+puts interface.requests.inspect; puts
+puts interface.responses.inspect; puts
+puts interface.last_response.inspect; puts
 
-r.staff.employee.method = 'DELETE'
-to_del.each{ |e|
-  r.staff.employee.params = {:id => e}
-  t.submit(r.staff.employee)
-}
