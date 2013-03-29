@@ -25,7 +25,7 @@ class ShiftPlanning
         req[:token] = token unless token.nil?
         @requests << req
         req = JSON::generate(req)
-        self.last_request = _request.to_json
+        self.last_request = req#_request.to_json
         
         request.set_form_data({"data" => req})
         response = @@http.request(request)
