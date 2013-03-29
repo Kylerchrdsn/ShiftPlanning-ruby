@@ -25,6 +25,6 @@ require 'json'
 require 'shiftplanning/interface'
 require 'shiftplanning/http_error'
 
-class ShiftPlanning; VERSION = '0.0.1' end
+class ShiftPlanning; VERSION = '0.0.2' end
 # Aliasing ShiftPlanning as SP 
 class SP < ShiftPlanning; end

@@ -2,12 +2,12 @@
 
 require 'rubygems'
 require 'shiftplanning'
-API_KEY = '9eea91f6fcaa9573b3949f4eb3b58b3d4624b2d0'#"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 interface = SP::Interface.new(API_KEY, :verbose => true, :outfile => '/home/krichardson/Desktop/output')
 request   = SP::Request.new
 
-request.staff.login.params = {:username => 'krichardson@customerdirect.com', :password => 'T0p@z098765'}#{:username => 'hmoon@nabootique.com', :password => 'J@zZ'}
+request.staff.login.params = {:username => 'hmoon@nabootique.com', :password => 'J@zZ'}
 
 interface.submit(request.staff.login)
 puts interface.token
