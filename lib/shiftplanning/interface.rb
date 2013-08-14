@@ -37,6 +37,7 @@ class ShiftPlanning
     def submit *args
       @requests = []; @responses = []
       msgs = []
+      resp = []
       
       args.each{ |_request|
         _request.params[:module] = _request.module
@@ -62,11 +63,13 @@ class ShiftPlanning
           @session[:sp_token] = last_response['token'] if(output == 'json' && @session != nil)  
           self.token = last_response['token'] if output == 'json'
           self.token = @session[:sp_token] unless @session.nil?
+          
           msgs << response_msg(last_response['status']) if output == 'json'
+          resp << self.last_response
         end
       }
       
-      msgs
+      return resp, msgs
     end
     
     private
