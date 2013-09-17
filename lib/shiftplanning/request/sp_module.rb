@@ -36,17 +36,23 @@ class SPModule
   #**********************************
   def required_params method
     case method.class.to_s
-    when 'Symbol' : method = method.to_s.upcase.to_sym
-    when 'String' : method = method.upcase.to_sym
+    when 'Symbol'
+      method = method.to_s.upcase.to_sym
+    when 'String'
+      method = method.upcase.to_sym
     else
       raise %q('method' should be a String or a Symbol)
     end
     
     case method
-    when :GET : @required_params[:GET]||'Unsupported method'
-    when :CREATE : @required_params[:CREATE]||'Unsupported method' 
-    when :UPDATE : @required_params[:UPDATE]||'Unsupported method'
-    when :DELETE : @required_params[:DELETE]||'Unsupported method'
+    when :GET
+      @required_params[:GET]||'Unsupported method'
+    when :CREATE
+      @required_params[:CREATE]||'Unsupported method' 
+    when :UPDATE
+      @required_params[:UPDATE]||'Unsupported method'
+    when :DELETE
+      @required_params[:DELETE]||'Unsupported method'
     end
   end
 end
