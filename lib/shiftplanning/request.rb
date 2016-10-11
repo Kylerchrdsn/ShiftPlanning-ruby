@@ -206,7 +206,7 @@ class ShiftPlanning
       def _messaging; Struct.new(:messages, :message, :shift, :wall, :notice, :notices) end
       def _reports; Struct.new(:schedule, :budget, :timesheets, :employee, :custom, :daily_peak_hours_new, :daily_peak_hours) end
       def _payroll; Struct.new(:report, :ratecards, :ratecard) end
-      def _staff; Struct.new(:login, :logout, :employees, :employee, :skills, :skill, :customfields, :customfield, :ping) end
+      def _staff; Struct.new(:login, :logout, :me, :employees, :employee, :skills, :skill, :customfields, :customfield, :ping) end
       def _availability; Struct.new(:available, :weekly, :future, :approve) end
       def _location; Struct.new(:locations, :location) end
       def _group; Struct.new(:accounts, :account, :accountsplit, :reports) end
