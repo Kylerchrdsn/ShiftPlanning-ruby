@@ -129,6 +129,7 @@ class ShiftPlanning
       @staff = _staff.new(
         SPModule.new('staff.login', 'GET', {}, %w(GET), {:GET => %w(username password)}),
         SPModule.new('staff.logout', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('staff.me', 'GET', {}, %w(GET), {:GET => %w(token)}),
         SPModule.new('staff.employees', 'GET', {}, %w(GET CREATE), {:GET => %w(token), :CREATE => %w(token)}),
         SPModule.new('staff.employee', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
           :GET => %w(token), :CREATE => %w(token), :UPDATE => %w(token id), :DELETE => %w(token id)
