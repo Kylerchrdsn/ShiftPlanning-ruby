@@ -129,6 +129,7 @@ class ShiftPlanning
       @staff = _staff.new(
         SPModule.new('staff.login', 'GET', {}, %w(GET), {:GET => %w(username password)}),
         SPModule.new('staff.logout', 'GET', {}, %w(GET), {:GET => %w(token)}),
+        SPModule.new('staff.me', 'GET', {}, %w(GET), {:GET => %w(token)}),
         SPModule.new('staff.employees', 'GET', {}, %w(GET CREATE), {:GET => %w(token), :CREATE => %w(token)}),
         SPModule.new('staff.employee', 'GET', {}, %w(GET CREATE UPDATE DELETE), {
           :GET => %w(token), :CREATE => %w(token), :UPDATE => %w(token id), :DELETE => %w(token id)
@@ -205,7 +206,7 @@ class ShiftPlanning
       def _messaging; Struct.new(:messages, :message, :shift, :wall, :notice, :notices) end
       def _reports; Struct.new(:schedule, :budget, :timesheets, :employee, :custom, :daily_peak_hours_new, :daily_peak_hours) end
       def _payroll; Struct.new(:report, :ratecards, :ratecard) end
-      def _staff; Struct.new(:login, :logout, :employees, :employee, :skills, :skill, :customfields, :customfield, :ping) end
+      def _staff; Struct.new(:login, :logout, :me, :employees, :employee, :skills, :skill, :customfields, :customfield, :ping) end
       def _availability; Struct.new(:available, :weekly, :future, :approve) end
       def _location; Struct.new(:locations, :location) end
       def _group; Struct.new(:accounts, :account, :accountsplit, :reports) end
