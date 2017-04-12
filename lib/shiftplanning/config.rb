@@ -24,8 +24,9 @@ require 'net/http'
 class ShiftPlanning
   class Config
     # Setup class variables 
-    @@uri = URI.parse("http://www.shiftplanning.com/api/")
+    @@uri = URI.parse("https://www.humanity.com/api/")
     @@http = Net::HTTP.new(@@uri.host, @@uri.port)
+    @@http.use_ssl = true
     @@api_path = @@uri.path
     @@return_types = %w(json xml html)
     
